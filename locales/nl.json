@@ -1,0 +1,33 @@
+{
+    "riddle1": {
+        "title": "Begin hier je raadselavontuur",
+        "riddle": "Welkom bij een ​​nieuw avontuur. Laten we beginnen met raadsel 1. \n Ik kan worden afgestemd, ik kan snel zijn, racers houden van mij, maar ik ben moeilijk te passeren. Ik word gezien op snelwegen, straten en circuits. Stuur me goed, anders kom je terug.",
+        "answer": ""
+    },
+    "riddle2": {
+        "title": "Raadsel 1 antwoord",
+        "riddle": "In het hart van Los Santos sta ik rechtop, de rijken komen op bezoek, de armen nemen de schuld. Ik kan een huis zijn, een overval of gewoon een rondleiding. Als de lichten uit zijn, ben ik moeilijk te negeren.",
+        "answer": "Auto's"
+    },
+    "riddle3": {
+        "title": "Raadsel 2 antwoord",
+        "riddle": "Ik ben waar je heen gaat als de zaken misgaan, ik kan je auto nemen of je mond legen. Een plek die zowel gevreesd als opgelucht is. Als je de wet overtreedt, ben ik waar je wordt ontvangen.",
+        "answer": "Maze Bank-toren"
+    },
+    "riddle4": {
+        "title": "Raadsel 3 antwoord",
+        "riddle": "Ik kan een huis zijn, een overval of gewoon een rondleiding. Als de lichten uit zijn, ben ik moeilijk te negeren.",
+        "answer": "Politiebureau"
+    },
+    "input": {
+        "give_answer": "Vul hier uw antwoord in:",
+        "wrong_answer": "Verkeerd antwoord, probeer het opnieuw",
+        "correct_answer": "JUIST! Volgend raadsel: ",
+        "completed": "GEFELICITEERD! Je hebt alle raadsels voltooid en daarom ontvang je een aantal beloningen!"
+    },
+    "price": {
+        "header": "Weet je het zeker?",
+        "content": "Deelnemen aan dit raadselavontuur kost je $%s. Weet je zeker dat je wilt deelnemen?",
+        "not_enough": "Je hebt niet genoeg geld"
+    }
+}
