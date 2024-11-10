@@ -5,7 +5,7 @@ local function spawnRiddlePed(
 	coords,
 	scenario,
 	riddleText,
-	correctAnswers,
+	correctAnswer,
 	imageUrl,
 	clothingOption,
 	riddleIndex
@@ -23,8 +23,8 @@ local function spawnRiddlePed(
 	SetModelAsNoLongerNeeded(modelHash)
 
 	local function handleInteraction()
-		local header = "Riddle " .. riddleIndex
-		if correctAnswers == {} then
+		local header = "Riddle " .. riddleIndex - 1
+		if correctAnswer == "" then
 			local playerFunds = exports.ox_inventory:Search("count", "money")
 
 			if not hasPaid then
@@ -63,18 +63,9 @@ local function spawnRiddlePed(
 			local userResponse =
 				lib.inputDialog(header .. " answer", { { label = locale("input.give_answer"), type = "input" } })[1]
 
-			local correct = false
-			for _, correctAnswer in pairs(correctAnswers) do
-				if tostring(userResponse):lower() == correctAnswer:lower() then
-					correct = true
-					break
-				end
-			end
-
-			if correct then
+			if tostring(userResponse):lower() == correctAnswer:lower() then
 				if riddleIndex == #Config.Riddles then
 					lib.alertDialog({
-						header = locale("input.correct_answer"),
 						content = locale("input.completed"),
 						centered = true,
 					})
@@ -94,7 +85,7 @@ local function spawnRiddlePed(
 					centered = true,
 				})
 				if Config.Debug then
-					print("Answer to riddle " .. riddleIndex .. ": " .. table.concat(correctAnswers, ", "))
+					print("Answer to riddle " .. riddleIndex .. ": " .. correctAnswer)
 				end
 			end
 		end
@@ -102,7 +93,7 @@ local function spawnRiddlePed(
 
 	local interactionOptions = {
 		{
-			label = #correctAnswers == 0 and locale("riddle1.title") or ("Riddle " .. riddleIndex),
+			label = correctAnswer == "" and locale("riddle1.title") or ("Riddle " .. riddleIndex),
 			onSelect = handleInteraction,
 			icon = "fas fa-question",
 			distance = 2.5,

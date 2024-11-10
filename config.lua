@@ -58,4 +58,4 @@ Config.Rewards = { -- Will be given when completing last riddle
 }
 
 Config.Target = "ox_target" -- "qb-target" or "ox_target" (UNTESTED)
--- Config.Inventory = "ox_inventory" -- "qb-inventory" or "ox_inventory" (DOES NOT WORK COMPLETELY YET, is ox_inventory for now)
+Config.Inventory = "ox_inventory" -- "qb-inventory" or "ox_inventory" (DOES NOT WORK COMPLETELY YET, is ox_inventory for now)
