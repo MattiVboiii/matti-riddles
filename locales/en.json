@@ -1,0 +1,33 @@
+{
+    "riddle1": {
+        "title": "Start your riddle adventure here",
+        "riddle": "Welcome a new adventure. Let's start with riddle 1.  \n I can be tuned, I can be fast, Racers love me, but I’m hard to pass. I’m seen on highways, streets, and tracks, Steer me well, or you'll end up back.",
+        "answer": ""
+    },
+    "riddle2": {
+        "title": "Riddle 1 answer",
+        "riddle": "In the heart of Los Santos, I stand tall, The rich come to visit, the poor take the fall. I can be a home, a heist, or just a tour, When the lights are out, I’m hard to ignore.",
+        "answer": "Cars"
+    },
+    "riddle3": {
+        "title": "Riddle 2 answer",
+        "riddle": "I’m where you go when things go south, I might take your car or empty your mouth. A place that’s both feared and relieved, If you break the law, I’m where you’re received.",
+        "answer": "Maze Bank Tower"
+    },
+    "riddle4": {
+        "title": "Riddle 3 answer",
+        "riddle": "I can be a home, a heist, or just a tour, When the lights are out, I’m hard to ignore.",
+        "answer": "Police Station"
+    },
+    "input": {
+        "give_answer": "Insert your answer here:",
+        "wrong_answer": "Wrong answer, try again",
+        "correct_answer": "CORRECT! Next riddle: ",
+        "completed": "CONGRATS! You have completed all riddles and therefore you will receive some rewards!"
+    },
+    "price": {
+        "header": "Are you sure?",
+        "content": "Participating in this riddle adventure will cost you $%s. Are you sure you want to participate?",
+        "not_enough": "You don't have enough money"
+    }
+}
