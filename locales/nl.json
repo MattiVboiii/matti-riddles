@@ -20,7 +20,7 @@
         "answer": "Politiebureau"
     },
     "input": {
-        "give_answer": "Vul hier uw antwoord in:",
+        "give_answer": "Voordat ik je het volgende raadsel geef, wat is het antwoord op raadsel %s ?",
         "wrong_answer": "Verkeerd antwoord, probeer het opnieuw",
         "correct_answer": "JUIST! Volgend raadsel: ",
         "completed": "GEFELICITEERD! Je hebt alle raadsels voltooid en daarom ontvang je een aantal beloningen!"

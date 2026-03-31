@@ -1,10 +1,31 @@
+lib.versionCheck("MattiVboiii/matti-riddles")
+
 QBCore = exports["qb-core"]:GetCoreObject()
 
 RegisterServerEvent("matti-riddles:removeMoney")
-AddEventHandler("matti-riddles:removeMoney", function(price)
+AddEventHandler("matti-riddles:removeMoney", function(price, method)
 	local src = source
 	local player = QBCore.Functions.GetPlayer(src)
-	player.Functions.RemoveMoney("cash", price)
+	local m = method or Config.PriceMethod or "cash"
+	if m == "bank" then
+		player.Functions.RemoveMoney("bank", price)
+	else
+		player.Functions.RemoveMoney("cash", price)
+	end
+end)
+
+QBCore.Functions.CreateCallback("matti-riddles:hasEnoughMoney", function(source, cb, price, method)
+	local player = QBCore.Functions.GetPlayer(source)
+	local m = method or Config.PriceMethod or "cash"
+	local funds = 0
+	if player and player.PlayerData and player.PlayerData.money then
+		if m == "bank" then
+			funds = player.PlayerData.money['bank'] or 0
+		else
+			funds = player.PlayerData.money['cash'] or 0
+		end
+	end
+	cb(funds >= (price or 0))
 end)
 
 RegisterServerEvent("matti-riddles:addRewards")
@@ -22,45 +43,40 @@ AddEventHandler("matti-riddles:addRewards", function(rewards)
 	end
 end)
 
--- Register an event to set the ped's clothing
---[[ RegisterServerEvent("matti-riddles:setPedClothing")
-AddEventHandler("matti-riddles:setPedClothing", function(model, citizenId)
-	-- Get the clothing data for the citizen
-	local query = "SELECT * FROM player_outfits WHERE citizenid = @citizenId"
-	local result = MySQL.query.await(query, { ["@citizenId"] = citizenId })
+-- Callback to get an outfit row by citizenid (and optional model)
+QBCore.Functions.CreateCallback("matti-riddles:getOutfit", function(source, cb, citizenid, model)
+	if not citizenid or citizenid == "" then
+		cb(nil)
+		return
+	end
+	-- Prefer full skin from illenium-appearance playerskins table when available
+	local skin = nil
+	if model and model ~= "" then
+		skin = MySQL.scalar.await("SELECT skin FROM playerskins WHERE citizenid = ? AND model = ? LIMIT 1", {citizenid, model})
+	end
+	if not skin then
+		skin = MySQL.scalar.await("SELECT skin FROM playerskins WHERE citizenid = ? AND active = 1 LIMIT 1", {citizenid})
+	end
+	if skin and type(skin) == "string" and skin:sub(1,1) == "{" then
+		cb({ skin = skin })
+		return
+	end
 
-	-- Set the ped's clothing
-	if result[1] then
-		local components = json.decode(result[1].components)
-
-		-- Set the clothing components
-		for _, component in ipairs(components) do
-			SetPedComponentVariation(ped, component.component_id, component.drawable, component.texture, 0)
+	-- Otherwise fall back to player_outfits table (components/props)
+	local result = nil
+	if model and model ~= "" then
+		result = MySQL.query.await("SELECT * FROM player_outfits WHERE citizenid = ? AND model = ? LIMIT 1", {citizenid, model})
+		if result and #result > 0 then
+			cb(result[1])
+			return
 		end
 	end
-end) ]]
-
--- Version checker
-PerformHttpRequest(
-	"https://raw.githubusercontent.com/MattiVboiii/matti-riddles/main/VERSION",
-	function(Error, OnlineVersion, Header)
-		OfflineVersion = LoadResourceFile("matti-riddles", "VERSION")
-		if Error ~= 200 then
-			error("^3 [ERROR]: There was an error, it is: HTTP" .. Error)
-			return 0
-		else
-			if OnlineVersion == OfflineVersion then
-				print("^3 [LATEST]: ^2 You are running the latest version of this script.")
-			end
-			if OnlineVersion > OfflineVersion then
-				print("^3 [UPDATE]: ^1 There is a new version of this script available!")
-				print("^3 [UPDATE]: ^7 Check out on Github: https://github.com/MattiVboiii/matti-riddles")
-			end
-			if OnlineVersion < OfflineVersion then
-				print(
-					"^3 [FUTURE??]: ^1 Are you living in the future? Because this version of the script has not been released yet..."
-				)
-			end
-		end
+	result = MySQL.query.await("SELECT * FROM player_outfits WHERE citizenid = ? LIMIT 1", {citizenid})
+	if result and #result > 0 then
+		cb(result[1])
+	else
+		cb(nil)
 	end
-)
+end)
+
+-- (Removed legacy server event: matti-riddles:setPedClothing)
